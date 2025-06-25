@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+
+input {
+  @apply border rounded-md px-1
+}
+input[type="submit"] {
+  @apply bg-gray-200 hover:bg-gray-400 cursor-pointer
+}
