@@ -1,10 +1,12 @@
 class PasswordsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_pw, only: [:show, :edit, :update, :destroy]
   def index
     @passwords = current_user.passwords
   end
+  def edit
+  end
   def show
-    @password = current_user.passwords.find(params[:id])
   end
   def new
     @password = Password.new
@@ -14,12 +16,26 @@ class PasswordsController < ApplicationController
     if @password.persisted?
       redirect_to @password
     else
-      render :new, status: :unprocessible_entity
+      render :new, status: :unprocessable_entity
     end
+  end
+  def update
+    if @password.update(password_params)
+      redirect_to @password
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+  def destroy
+    @password.destroy
+    redirect_to :passwords
   end
 
   private
   def password_params
     params.require(:password).permit(:url, :username, :password)
+  end
+  def set_pw
+    @password = current_user.passwords.find(params[:id])
   end
 end
