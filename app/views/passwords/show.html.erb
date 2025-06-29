@@ -1,9 +1,25 @@
+<%= link_to '← Back', root_path %>
+
 <div class="flex justify-between">
-  <h3><%= "Password for #{@password.url}" %></h2>
+  <h3> Password for: <span class="underline text-gray-500"><%= @password.url %></span></h2>
   <%= link_to 'Edit', edit_password_path %>
 </div>
 
-<h6>Username / Email</h6>
+<h6> Username for Password</h6>
 <pre class="mt-0"><code><%= @password.username %></code></pre>
 <h6>Password</h6>
 <pre class="mt-0"><code><%= @password.password %></code></pre>
+
+<%= link_to 'Share Password', new_password_share_path(@password) %>
+
+<% if @password.users.count > 1 %>
+  <h3>This password is shared with these PassVault users:</h3>
+  <ul>
+    <% @password.users.excluding(current_user).each do |u| %>
+      <div class="flex gap-4">
+        <li><%= u.email %></li>
+        <%= button_to "Remove shared user", password_share_path(@password), method: :delete %>
+      </div>
+    <% end %>
+  </ul>
+<% end %>

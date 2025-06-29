@@ -1,0 +1,10 @@
+<%= link_to '← Back', root_path, class: "no-underline" %>
+
+<h3>Share Password With:</h3>
+<%= form_with model: @user_password, url: password_shares_path do |f| %>
+  <div>
+    <%= f.label :user_id %> -
+    <%= f.collection_select :user_id, @users, :id, :email %>
+  </div>
+  <%= f.submit 'Submit' %>
+<% end %>

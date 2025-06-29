@@ -2,4 +2,4 @@
 
 <%= render 'form', password: @password %>
 <%= button_tag 'Delete', form: 'delete_password' %>
-<%= form_with model: password, method: :delete, id: "delete_password", data: {turbo_confirm: "Are you sure?"} %>
+<%= form_with model: @password, method: :delete, id: "delete_password", data: {turbo_confirm: "Are you sure?"} %>

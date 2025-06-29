@@ -1,12 +1,14 @@
 class PasswordsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_pw, only: [:show, :edit, :update, :destroy]
+  before_action :set_pw, only: [:edit, :update, :destroy]
   def index
     @passwords = current_user.passwords
   end
   def edit
   end
   def show
+    @password = Password.find(params[:id])
+    # @password ||= set_pw
   end
   def new
     @password = Password.new

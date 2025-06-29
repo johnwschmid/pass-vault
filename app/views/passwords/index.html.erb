@@ -1,6 +1,6 @@
-<div class="flex justify-between">
-  <h1>PassVault</h1>
-  <%= link_to 'New Password', new_password_path %><br><br>
+<div class="flex justify-center">
+  <%= link_to 'Save New Password', new_password_path, class: "" %><br><br>
 </div>
-<h5>My Passwords</h5>
+
+<h5 class="mb-2">My Passwords:</h5>
 <%= render @passwords %>
