@@ -3,8 +3,12 @@
 <h3>Share Password With:</h3>
 <%= form_with model: @user_password, url: password_shares_path do |f| %>
   <div>
-    <%= f.label :user_id %> -
-    <%= f.collection_select :user_id, @users, :id, :email %>
+    <%= f.label :user_id, "Select a user to share password with:" %>
+    <%= f.collection_select :user_id, User.excluding(@password.users), :id, :email, { prompt: "" }, { class: "border border-gray-300 focus:ring-indigo-500" }  %>
+  </div>
+  <div>
+    <%= f.label :role, "Select a role for that user:" %>
+    <%= f.select :role, UserPassword::ROLES, { prompt: "" }, { class: "border border-gray-300 focus:ring-indigo-500" } %>
   </div>
   <%= f.submit 'Submit' %>
 <% end %>
