@@ -8,4 +8,11 @@ class UserPassword < ApplicationRecord
   validates :user_id, presence: true
 
   attribute :role, default: 'viewer'
+
+  def editor?
+    role.in? ['editor', 'owner']
+  end
+  def owner?
+    role == 'owner'
+  end
 end

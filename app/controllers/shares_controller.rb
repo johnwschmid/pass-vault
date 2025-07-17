@@ -1,7 +1,8 @@
 class SharesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_pw, only: [:create, :new]
-  before_action :require_owner_permits, only: [:new, :create, :destroy]
+  before_action :set_pw
+  before_action :require_owner_permits, only: [:destroy]
+  before_action :require_editor_permits, only: [:new, :create]
   def new
     @user_password = UserPassword.new
   end
@@ -26,6 +27,13 @@ class SharesController < ApplicationController
     params.require(:user_password).permit(:user_id, :role) 
   end
   def require_owner_permits
-    @password.owned_by?(current_user)
+    unless @password.owned_by?(current_user)
+      redirect_to @password, alert: 'Need password ownership permissions'
+    end
+  end
+  def require_editor_permits
+    unless @password.editable_by?(current_user)
+      redirect_to @password, alert: 'Do not have edit permissions'
+    end
   end
 end
